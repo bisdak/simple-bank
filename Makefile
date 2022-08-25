@@ -16,4 +16,7 @@ migratedown:
 sqlcinit:
 	docker run --rm -v $(pwd):/src -w /src kjconroy/sqlc init
 
+test:
+	go test -v -cover ./...
+
 .PHONY: postgres createdb dropdb migrateup migratedown sqlcinit
