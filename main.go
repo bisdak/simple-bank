@@ -1,14 +1,31 @@
 package main
 
 import (
-	"fmt"
+	"database/sql"
+	"log"
 
-	"github.com/bisdak/simple-bank/util"
+	"github.com/bisdak/simple-bank/api"
+	db "github.com/bisdak/simple-bank/db/sqlc"
+	_ "github.com/lib/pq"
+)
+
+const (
+	dbDriver      = "postgres"
+	dbSource      = "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable"
+	serverAddress = "0.0.0.0:8080"
 )
 
 func main() {
-	for i := 0; i < 20; i++ {
-		fmt.Println(util.RandomString(10))
+	conn, err := sql.Open(dbDriver, dbSource)
+	if err != nil {
+		log.Fatal("cannot connect to db:", err)
 	}
 
+	store := db.NewStore(conn)
+	server := api.NewServer(store)
+
+	err = server.Start(serverAddress)
+	if err != nil {
+		log.Fatal("cannot start server", err)
+	}
 }
