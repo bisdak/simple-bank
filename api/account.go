@@ -10,7 +10,7 @@ import (
 
 type createAccountRequest struct {
 	Owner    string `json:"owner" binding:"required"`
-	Currency string `json:"currency" binding:"required,oneof=USD EUR"`
+	Currency string `json:"currency" binding:"required,oneof=USD EUR CAD"`
 }
 
 func (server *Server) createAccount(c *gin.Context) {
@@ -51,7 +51,7 @@ func (server *Server) getAccount(c *gin.Context) {
 			c.JSON(http.StatusNotFound, errorResponse(err))
 			return
 		}
-		c.JSON(http.StatusBadRequest, errorResponse(err))
+		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
