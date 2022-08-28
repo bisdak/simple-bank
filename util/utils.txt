@@ -13,3 +13,6 @@ UPDATE accounts SET balance = balance - 10 WHERE id = 4 RETURNING *;
 UPDATE accounts SET balance = balance + 10 WHERE id = 3 RETURNING *;
 
 ROLLBACK;
+
+
+migrate create -ext sql -dir db/migration -seq add_users
