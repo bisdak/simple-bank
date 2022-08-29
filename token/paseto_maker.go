@@ -52,5 +52,4 @@ func (maker *PasetoMaker) VerifyToken(token string) (*Payload, error) {
 	}
 
 	return payload, nil
-
 }
